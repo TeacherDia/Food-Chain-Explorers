@@ -1,0 +1,598 @@
+<!DOCTYPE html>
+<html lang="en" class="h-full">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Food Chain Exploration Lab</title>
+    <!-- Tailwind CSS CDN -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <!-- Google Font: Inter -->
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <style>
+        body { font-family: 'Inter', sans-serif; }
+        /* 3D Card Flip Styles */
+        .perspective { perspective: 1000px; }
+        .transform-style-3d { transform-style: preserve-3d; }
+        .backface-hidden { backface-visibility: hidden; -webkit-backface-visibility: hidden; }
+        .rotate-y-180 { transform: rotateY(180deg); }
+    </style>
+</head>
+<body class="bg-slate-900 text-slate-100 h-full flex flex-col justify-between antialiased selection:bg-emerald-500 selection:text-white">
+
+    <!-- Top Navigation Header -->
+    <header class="bg-slate-800 border-b border-slate-700 p-4 sticky top-0 z-50 shadow-md">
+        <div class="max-w-xl mx-auto flex justify-between items-center">
+            <div class="flex items-center space-x-2">
+                <span class="bg-emerald-500 text-slate-950 font-bold p-2 rounded-xl text-sm">🌿 EcoLab</span>
+                <div>
+                    <h1 class="font-bold text-base leading-tight">Food Chain Exploration</h1>
+                    <p class="text-xs text-slate-400">Natural Sciences • Grade 5/6</p>
+                </div>
+            </div>
+            <div class="bg-emerald-950 text-emerald-400 border border-emerald-800 text-xs px-2.5 py-1 rounded-full font-medium flex items-center space-x-1">
+                <span class="w-2 h-2 rounded-full bg-emerald-400 animate-pulse"></span>
+                <span>Offline Ready</span>
+            </div>
+        </div>
+    </header>
+
+    <!-- Main Content Container -->
+    <main class="flex-1 overflow-y-auto p-4 max-w-xl mx-auto w-full space-y-5">
+
+        <!-- Navigation Tabs -->
+        <div class="flex rounded-xl bg-slate-800 p-1 border border-slate-700">
+            <button onclick="switchTab('cards')" id="btn-cards" class="flex-1 py-2 text-xs font-semibold rounded-lg bg-emerald-600 text-white transition-all shadow">
+                1. Organism Cards
+            </button>
+            <button onclick="switchTab('sorter')" id="btn-sorter" class="flex-1 py-2 text-xs font-semibold rounded-lg text-slate-400 hover:text-white transition-all">
+                2. Build Chain
+            </button>
+            <button onclick="switchTab('whatif')" id="btn-whatif" class="flex-1 py-2 text-xs font-semibold rounded-lg text-slate-400 hover:text-white transition-all">
+                3. What If?
+            </button>
+            <button onclick="switchTab('animation')" id="btn-animation" class="flex-1 py-2 text-xs font-semibold rounded-lg text-slate-400 hover:text-white transition-all">
+                4. Cascade Sim
+            </button>
+        </div>
+
+        <!-- PAGE 1: FLIPPING CARDS -->
+        <section id="tab-cards" class="space-y-4">
+            <div class="bg-gradient-to-r from-emerald-900/60 to-teal-900/40 border border-emerald-700/50 p-4 rounded-2xl shadow-lg">
+                <h2 class="text-base font-bold text-emerald-300 mb-1">Explore Organism Clues</h2>
+                <p class="text-xs text-slate-200">
+                    Tap on an animal card to see what it eats. Then, go to <strong>Tab 2 (Build Chain)</strong> to arrange the cards in the correct food chain!
+                </p>
+            </div>
+
+            <div class="space-y-3">
+                <!-- GRASSHOPPER -->
+                <div class="perspective h-28 w-full cursor-pointer" onclick="flipCard('c-grasshopper')">
+                    <div id="c-grasshopper" class="relative w-full h-full duration-500 transform-style-3d transition-transform">
+                        <div class="absolute w-full h-full rounded-2xl p-4 bg-slate-800 border-2 border-lime-500/60 flex items-center justify-between backface-hidden shadow-md">
+                            <div class="flex items-center space-x-4">
+                                <div class="text-4xl">🦗</div>
+                                <div>
+                                    <h3 class="font-bold text-base text-slate-100">Grasshopper</h3>
+                                    <p class="text-xs text-lime-400">Herbivore</p>
+                                </div>
+                            </div>
+                            <span class="text-xs text-slate-400 bg-slate-900 px-2.5 py-1 rounded-full border border-slate-700">Tap to flip 🔄</span>
+                        </div>
+                        <div class="absolute w-full h-full rounded-2xl p-4 bg-lime-950 border-2 border-lime-400 flex items-center rotate-y-180 backface-hidden shadow-lg">
+                            <p class="text-xs text-lime-100 font-medium">🦗 Grasshopper - I eat leaves and grass.</p>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- FROG -->
+                <div class="perspective h-28 w-full cursor-pointer" onclick="flipCard('c-frog')">
+                    <div id="c-frog" class="relative w-full h-full duration-500 transform-style-3d transition-transform">
+                        <div class="absolute w-full h-full rounded-2xl p-4 bg-slate-800 border-2 border-teal-500/60 flex items-center justify-between backface-hidden shadow-md">
+                            <div class="flex items-center space-x-4">
+                                <div class="text-4xl">🐸</div>
+                                <div>
+                                    <h3 class="font-bold text-base text-slate-100">Frog</h3>
+                                    <p class="text-xs text-teal-400">Carnivore</p>
+                                </div>
+                            </div>
+                            <span class="text-xs text-slate-400 bg-slate-900 px-2.5 py-1 rounded-full border border-slate-700">Tap to flip 🔄</span>
+                        </div>
+                        <div class="absolute w-full h-full rounded-2xl p-4 bg-teal-950 border-2 border-teal-400 flex items-center rotate-y-180 backface-hidden shadow-lg">
+                            <p class="text-xs text-teal-100 font-medium">🐸 Frog - I eat insects such as grasshoppers.</p>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- EAGLE -->
+                <div class="perspective h-28 w-full cursor-pointer" onclick="flipCard('c-eagle')">
+                    <div id="c-eagle" class="relative w-full h-full duration-500 transform-style-3d transition-transform">
+                        <div class="absolute w-full h-full rounded-2xl p-4 bg-slate-800 border-2 border-rose-500/60 flex items-center justify-between backface-hidden shadow-md">
+                            <div class="flex items-center space-x-4">
+                                <div class="text-4xl">🦅</div>
+                                <div>
+                                    <h3 class="font-bold text-base text-slate-100">Eagle</h3>
+                                    <p class="text-xs text-rose-400">Apex Predator</p>
+                                </div>
+                            </div>
+                            <span class="text-xs text-slate-400 bg-slate-900 px-2.5 py-1 rounded-full border border-slate-700">Tap to flip 🔄</span>
+                        </div>
+                        <div class="absolute w-full h-full rounded-2xl p-4 bg-rose-950 border-2 border-rose-400 flex items-center rotate-y-180 backface-hidden shadow-lg">
+                            <p class="text-xs text-rose-100 font-medium">🦅 Eagle - I can eat snakes and other animals.</p>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- GRASS -->
+                <div class="perspective h-28 w-full cursor-pointer" onclick="flipCard('c-grass')">
+                    <div id="c-grass" class="relative w-full h-full duration-500 transform-style-3d transition-transform">
+                        <div class="absolute w-full h-full rounded-2xl p-4 bg-slate-800 border-2 border-emerald-500/60 flex items-center justify-between backface-hidden shadow-md">
+                            <div class="flex items-center space-x-4">
+                                <div class="text-4xl">🌱</div>
+                                <div>
+                                    <h3 class="font-bold text-base text-slate-100">Grass</h3>
+                                    <p class="text-xs text-emerald-400">Producer</p>
+                                </div>
+                            </div>
+                            <span class="text-xs text-slate-400 bg-slate-900 px-2.5 py-1 rounded-full border border-slate-700">Tap to flip 🔄</span>
+                        </div>
+                        <div class="absolute w-full h-full rounded-2xl p-4 bg-emerald-950 border-2 border-emerald-400 flex items-center rotate-y-180 backface-hidden shadow-lg">
+                            <p class="text-xs text-emerald-100 font-medium">🌱 Grass - I use sunlight to make my own food.</p>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- SNAKE -->
+                <div class="perspective h-28 w-full cursor-pointer" onclick="flipCard('c-snake')">
+                    <div id="c-snake" class="relative w-full h-full duration-500 transform-style-3d transition-transform">
+                        <div class="absolute w-full h-full rounded-2xl p-4 bg-slate-800 border-2 border-amber-500/60 flex items-center justify-between backface-hidden shadow-md">
+                            <div class="flex items-center space-x-4">
+                                <div class="text-4xl">🐍</div>
+                                <div>
+                                    <h3 class="font-bold text-base text-slate-100">Snake</h3>
+                                    <p class="text-xs text-amber-400">Carnivore</p>
+                                </div>
+                            </div>
+                            <span class="text-xs text-slate-400 bg-slate-900 px-2.5 py-1 rounded-full border border-slate-700">Tap to flip 🔄</span>
+                        </div>
+                        <div class="absolute w-full h-full rounded-2xl p-4 bg-amber-950 border-2 border-amber-400 flex items-center rotate-y-180 backface-hidden shadow-lg">
+                            <p class="text-xs text-amber-100 font-medium">🐍 Snake - I eat frogs and other small animals.</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- PAGE 2: BUILD THE FOOD CHAIN (TAP / DRAG ARRANGEMENT) -->
+        <section id="tab-sorter" class="hidden space-y-4">
+            <div class="bg-slate-800 border border-slate-700 p-4 rounded-2xl space-y-2">
+                <h3 class="font-bold text-sm text-emerald-300">Arrange the Food Chain</h3>
+                <p class="text-xs text-slate-300">
+                    Tap the cards below to build the food chain in the correct order from primary producer to apex predator!
+                </p>
+            </div>
+
+            <!-- Target Chain Slots -->
+            <div class="bg-slate-950 border border-slate-800 p-3 rounded-2xl space-y-2">
+                <div class="text-[11px] font-bold text-slate-400 uppercase tracking-wider text-center">Your Food Chain:</div>
+                <div id="chain-slots" class="flex flex-wrap gap-2 justify-center min-h-[50px] p-2 bg-slate-900 rounded-xl border border-dashed border-slate-700 items-center">
+                    <span id="placeholder-text" class="text-xs text-slate-500 italic">Tap cards below to place them here...</span>
+                </div>
+            </div>
+
+            <!-- Pool of Available Cards -->
+            <div class="space-y-2">
+                <div class="text-[11px] font-bold text-slate-400 uppercase tracking-wider">Available Organisms:</div>
+                <div id="card-pool" class="grid grid-cols-2 gap-2">
+                    <!-- Dynamic pool buttons rendered by JS -->
+                </div>
+            </div>
+
+            <!-- Action & Feedback Buttons -->
+            <div class="space-y-2">
+                <div class="flex space-x-2">
+                    <button onclick="checkFoodChain()" class="flex-1 bg-emerald-600 hover:bg-emerald-500 text-white font-bold py-2.5 rounded-xl text-xs transition-all shadow">
+                        Check My Food Chain
+                    </button>
+                    <button onclick="resetFoodChain()" class="bg-slate-700 hover:bg-slate-600 text-slate-200 font-semibold px-4 py-2.5 rounded-xl text-xs transition-all">
+                        Reset 🔄
+                    </button>
+                </div>
+
+                <!-- Inquiry Feedback Box -->
+                <div id="detective-feedback" class="hidden p-4 rounded-2xl text-xs space-y-2 border">
+                    <div class="flex items-center space-x-2 font-bold text-sm" id="feedback-title"></div>
+                    <p id="feedback-body" class="text-slate-200 leading-relaxed"></p>
+                </div>
+            </div>
+        </section>
+
+        <!-- PAGE 3: WHAT IF? PREDICTION CHALLENGE -->
+        <section id="tab-whatif" class="hidden space-y-4">
+            <div class="bg-slate-800 border border-slate-700 p-4 rounded-2xl space-y-2">
+                <h3 class="font-bold text-sm text-emerald-300">❓ "What If?" Challenge</h3>
+                <p class="text-xs text-slate-300">
+                    Select a scenario below. Predict what will happen BEFORE revealing the scientific breakdown!
+                </p>
+            </div>
+
+            <!-- Scenario Selection Buttons -->
+            <div class="grid grid-cols-2 gap-2">
+                <button onclick="selectScenario('drought')" id="btn-scen-drought" class="p-3 bg-amber-950/40 border-2 border-amber-600/50 rounded-xl text-left hover:border-amber-400 transition-all">
+                    <div class="text-lg mb-1">🏜️</div>
+                    <div class="font-bold text-xs text-amber-200">1. Severe Drought</div>
+                    <div class="text-[10px] text-slate-400">All grass dries up</div>
+                </button>
+                <button onclick="selectScenario('insecticide')" id="btn-scen-insecticide" class="p-3 bg-rose-950/40 border-2 border-slate-700 rounded-xl text-left hover:border-rose-400 transition-all">
+                    <div class="text-lg mb-1">🧪</div>
+                    <div class="font-bold text-xs text-rose-200">2. Insecticide Spray</div>
+                    <div class="text-[10px] text-slate-400">Grasshoppers wiped out</div>
+                </button>
+            </div>
+
+            <!-- Prediction Multiple Choice Box -->
+            <div id="prediction-box" class="bg-slate-800 border border-slate-700 p-4 rounded-2xl space-y-3">
+                <h4 id="pred-title" class="font-bold text-xs text-emerald-400">Make Your Prediction:</h4>
+                <p id="pred-question" class="text-xs text-slate-200 leading-relaxed"></p>
+
+                <div id="pred-options" class="space-y-2">
+                    <!-- Populated by JS -->
+                </div>
+            </div>
+
+            <!-- Scientific Explanation (Revealed after prediction) -->
+            <div id="explanation-box" class="hidden bg-slate-950 border border-emerald-600/60 p-4 rounded-2xl text-xs space-y-2">
+                <div class="font-bold text-emerald-400 text-xs flex items-center space-x-2">
+                    <span>📖 Scientific Explanation:</span>
+                </div>
+                <p id="explanation-text" class="text-slate-300 leading-relaxed"></p>
+            </div>
+        </section>
+
+        <!-- PAGE 4: EMOJI CASCADE ANIMATION -->
+        <section id="tab-animation" class="hidden space-y-4">
+            <div class="bg-slate-800 border border-slate-700 p-4 rounded-2xl space-y-2">
+                <h3 class="font-bold text-sm text-emerald-300">🎬 Trophic Cascade Simulation</h3>
+                <p class="text-xs text-slate-300">
+                    Watch how a reduction in plants triggers a chain reaction that affects every animal in the food chain!
+                </p>
+            </div>
+
+            <!-- Visual Animation Display -->
+            <div class="bg-slate-950 border border-slate-800 p-4 rounded-2xl space-y-4">
+
+                <div class="space-y-3">
+                    <!-- Trophic Stage 1: Grass -->
+                    <div class="flex items-center justify-between p-2 bg-slate-900 rounded-xl">
+                        <span class="text-xs font-semibold text-emerald-400">Producers:</span>
+                        <span id="anim-grass" class="text-xl tracking-widest transition-all duration-500">🌱 🌱 🌱 🌱 🌱</span>
+                    </div>
+
+                    <!-- Trophic Stage 2: Grasshoppers -->
+                    <div class="flex items-center justify-between p-2 bg-slate-900 rounded-xl">
+                        <span class="text-xs font-semibold text-lime-400">Herbivores:</span>
+                        <span id="anim-grasshoppers" class="text-xl tracking-widest transition-all duration-500">🦗 🦗 🦗 🦗</span>
+                    </div>
+
+                    <!-- Trophic Stage 3: Frogs -->
+                    <div class="flex items-center justify-between p-2 bg-slate-900 rounded-xl">
+                        <span class="text-xs font-semibold text-teal-400">Carnivores:</span>
+                        <span id="anim-frogs" class="text-xl tracking-widest transition-all duration-500">🐸 🐸 🐸</span>
+                    </div>
+
+                    <!-- Trophic Stage 4: Snakes -->
+                    <div class="flex items-center justify-between p-2 bg-slate-900 rounded-xl">
+                        <span class="text-xs font-semibold text-amber-400">Carnivores:</span>
+                        <span id="anim-snakes" class="text-xl tracking-widest transition-all duration-500">🐍 🐍</span>
+                    </div>
+
+                    <!-- Trophic Stage 5: Eagles -->
+                    <div class="flex items-center justify-between p-2 bg-slate-900 rounded-xl">
+                        <span class="text-xs font-semibold text-rose-400">Apex Predator:</span>
+                        <span id="anim-eagles" class="text-xl tracking-widest transition-all duration-500">🦅</span>
+                    </div>
+                </div>
+
+                <!-- Simulation Controls -->
+                <div class="pt-2 flex space-x-2">
+                    <button onclick="startCascade()" class="flex-1 bg-amber-600 hover:bg-amber-500 text-white font-bold py-2.5 rounded-xl text-xs transition-all shadow">
+                        ▶️ Trigger Drought Cascade
+                    </button>
+                    <button onclick="resetCascade()" class="bg-slate-700 hover:bg-slate-600 text-slate-200 font-semibold px-4 py-2.5 rounded-xl text-xs transition-all">
+                        Reset 🔄
+                    </button>
+                </div>
+
+                <!-- Status Banner -->
+                <div id="sim-status" class="p-3 bg-slate-900 border border-slate-700 rounded-xl text-xs text-center text-slate-300 italic">
+                    Press "Trigger Drought Cascade" to observe the chain collapse.
+                </div>
+            </div>
+        </section>
+
+    </main>
+
+    <!-- Footer Note -->
+    <footer class="bg-slate-800 border-t border-slate-700 p-3 text-center text-[10px] text-slate-400">
+        Designed for Set C • Mobile & Offline Optimized
+    </footer>
+
+    <!-- JavaScript Application Logic -->
+    <script>
+        // Flip Card Function
+        function flipCard(id) {
+            document.getElementById(id).classList.toggle('rotate-y-180');
+        }
+
+        // Tab Navigation
+        function switchTab(tab) {
+            ['cards', 'sorter', 'whatif', 'animation'].forEach(t => {
+                document.getElementById(`tab-${t}`).classList.add('hidden');
+                document.getElementById(`btn-${t}`).className = "flex-1 py-2 text-xs font-semibold rounded-lg text-slate-400 hover:text-white transition-all";
+            });
+            document.getElementById(`tab-${tab}`).classList.remove('hidden');
+            document.getElementById(`btn-${tab}`).className = "flex-1 py-2 text-xs font-semibold rounded-lg bg-emerald-600 text-white transition-all shadow";
+        }
+
+        // FOOD CHAIN BUILDER LOGIC
+        const organisms = [
+            { id: 'grass', name: '🌱 Grass', role: 'Producer' },
+            { id: 'grasshopper', name: '🦗 Grasshopper', role: 'Herbivore' },
+            { id: 'frog', name: '🐸 Frog', role: 'Carnivore' },
+            { id: 'snake', name: '🐍 Snake', role: 'Carnivore' },
+            { id: 'eagle', name: '🦅 Eagle', role: 'Apex Predator' }
+        ];
+
+        const correctOrder = ['grass', 'grasshopper', 'frog', 'snake', 'eagle'];
+        let selectedChain = [];
+
+        function renderPool() {
+            const poolContainer = document.getElementById('card-pool');
+            poolContainer.innerHTML = '';
+            
+            // Randomize display order in pool
+            const available = organisms.filter(o => !selectedChain.includes(o.id));
+            
+            available.forEach(item => {
+                const btn = document.createElement('button');
+                btn.className = "p-3 bg-slate-800 border border-slate-700 hover:border-emerald-500 rounded-xl text-left flex justify-between items-center transition-all";
+                btn.onclick = () => selectOrganism(item.id);
+                btn.innerHTML = `<span class="font-bold text-xs text-slate-100">${item.name}</span><span class="text-[10px] text-slate-400 bg-slate-900 px-2 py-0.5 rounded">+ Add</span>`;
+                poolContainer.appendChild(btn);
+            });
+
+            renderChainSlots();
+        }
+
+        function renderChainSlots() {
+            const slotsContainer = document.getElementById('chain-slots');
+            const placeholder = document.getElementById('placeholder-text');
+
+            if (selectedChain.length === 0) {
+                slotsContainer.innerHTML = '<span id="placeholder-text" class="text-xs text-slate-500 italic">Tap cards below to place them here...</span>';
+                return;
+            }
+
+            slotsContainer.innerHTML = '';
+            selectedChain.forEach((id, idx) => {
+                const org = organisms.find(o => o.id === id);
+                const chip = document.createElement('div');
+                chip.className = "bg-emerald-950 border border-emerald-600/80 text-emerald-200 text-xs px-3 py-1.5 rounded-xl flex items-center space-x-1 cursor-pointer font-medium shadow-sm";
+                chip.onclick = () => removeOrganism(id);
+                chip.innerHTML = `<span>${idx + 1}. ${org.name}</span> <span class="text-rose-400 text-xs ml-1">✕</span>`;
+                slotsContainer.appendChild(chip);
+
+                if (idx < selectedChain.length - 1) {
+                    const arrow = document.createElement('span');
+                    arrow.className = "text-emerald-500 text-xs font-bold";
+                    arrow.innerText = "➔";
+                    slotsContainer.appendChild(arrow);
+                }
+            });
+        }
+
+        function selectOrganism(id) {
+            if (selectedChain.length < 5 && !selectedChain.includes(id)) {
+                selectedChain.push(id);
+                renderPool();
+            }
+        }
+
+        function removeOrganism(id) {
+            selectedChain = selectedChain.filter(item => item !== id);
+            renderPool();
+        }
+
+        function resetFoodChain() {
+            selectedChain = [];
+            document.getElementById('detective-feedback').classList.add('hidden');
+            renderPool();
+        }
+
+        function checkFoodChain() {
+            const feedbackBox = document.getElementById('detective-feedback');
+            const title = document.getElementById('feedback-title');
+            const body = document.getElementById('feedback-body');
+
+            feedbackBox.classList.remove('hidden');
+
+            if (selectedChain.length < 5) {
+                feedbackBox.className = "p-4 rounded-2xl text-xs space-y-2 border bg-amber-950/60 border-amber-600 text-amber-200";
+                title.innerText = "🔎 Detective Tip:";
+                body.innerText = "You haven't placed all 5 organisms yet! Add all organisms to complete the food chain sequence.";
+                return;
+            }
+
+            const isCorrect = selectedChain.every((val, index) => val === correctOrder[index]);
+
+            if (isCorrect) {
+                feedbackBox.className = "p-4 rounded-2xl text-xs space-y-2 border bg-emerald-950/60 border-emerald-600 text-emerald-200";
+                title.innerText = "🎉 Excellent Detective Work!";
+                body.innerText = "Perfect! Energy flows from Grass ➔ Grasshopper ➔ Frog ➔ Snake ➔ Eagle. Notice how the solar energy captured by grass reaches all the way to the top predator!";
+            } else {
+                feedbackBox.className = "p-4 rounded-2xl text-xs space-y-2 border bg-slate-900 border-amber-500 text-amber-200";
+                title.innerText = "🔎 Detective Feedback:";
+
+                // Inquiry-oriented feedback based on errors
+                if (selectedChain[0] !== 'grass') {
+                    body.innerText = "Look carefully at your first organism. Which of these can capture sunlight to produce its own food energy from scratch?";
+                } else if (selectedChain[1] !== 'grasshopper') {
+                    body.innerText = "Look carefully at your first two organisms. Which animal eats grass directly to get its food energy?";
+                } else if (selectedChain[2] !== 'frog') {
+                    body.innerText = "Check your third organism! Which carnivore eats grasshoppers?";
+                } else {
+                    body.innerText = "You're very close! Check the order of your last two carnivores. Which one eats frogs, and which apex predator hunts snakes?";
+                }
+            }
+        }
+
+        // PREDICTION CHALLENGE LOGIC
+        const scenarios = {
+            drought: {
+                question: "A severe drought causes all 🌱 Grass to dry up and die. What will happen to the 🦅 Eagle (top predator)?",
+                options: [
+                    "A) Eagles will eat dried soil instead.",
+                    "B) Eagles won't be affected because they only eat meat.",
+                    "C) Eagles will eventually starve because their prey (snakes and frogs) lose their food supply."
+                ],
+                correct: 2,
+                explanation: "Even though eagles never eat grass, all of their food energy comes from animals that rely on grass! Drought ➔ No Grass ➔ Grasshoppers starve ➔ Frogs starve ➔ Snakes starve ➔ Eagles starve."
+            },
+            insecticide: {
+                question: "Farmers spray insecticide, wiping out all 🦗 Grasshoppers. How does this impact 🐸 Frogs and 🐍 Snakes?",
+                options: [
+                    "A) Frogs will start eating grass instead.",
+                    "B) Frogs lose their main food source, causing frog and snake populations to drop.",
+                    "C) Snakes will grow larger because there are fewer insects."
+                ],
+                correct: 1,
+                explanation: "Frogs are strict carnivores/insectivores and cannot digest plants. Losing grasshoppers removes the energy bridge between grass and carnivores!"
+            }
+        };
+
+        let currentScenarioKey = 'drought';
+
+        function selectScenario(key) {
+            currentScenarioKey = key;
+            document.getElementById('explanation-box').classList.add('hidden');
+            
+            if(key === 'drought') {
+                document.getElementById('btn-scen-drought').className = "p-3 bg-amber-950/40 border-2 border-amber-600 rounded-xl text-left transition-all";
+                document.getElementById('btn-scen-insecticide').className = "p-3 bg-slate-800 border border-slate-700 rounded-xl text-left opacity-70 transition-all";
+            } else {
+                document.getElementById('btn-scen-drought').className = "p-3 bg-slate-800 border border-slate-700 rounded-xl text-left opacity-70 transition-all";
+                document.getElementById('btn-scen-insecticide').className = "p-3 bg-rose-950/40 border-2 border-rose-600 rounded-xl text-left transition-all";
+            }
+
+            renderScenario();
+        }
+
+        function renderScenario() {
+            const sc = scenarios[currentScenarioKey];
+            document.getElementById('pred-question').innerText = sc.question;
+            const optsContainer = document.getElementById('pred-options');
+            optsContainer.innerHTML = '';
+
+            sc.options.forEach((opt, idx) => {
+                const btn = document.createElement('button');
+                btn.type = "button";
+                btn.className = "w-full text-left p-3.5 bg-slate-900 border border-slate-700 hover:border-emerald-500 active:bg-emerald-950/80 rounded-xl text-xs transition-all text-slate-200 cursor-pointer shadow-sm flex items-start space-x-2";
+                btn.onclick = function(e) {
+                    e.preventDefault();
+                    submitPrediction(idx);
+                };
+                btn.innerHTML = `<span class="inline-block mt-0.5 text-emerald-400 font-bold">🔘</span> <span>${opt}</span>`;
+                optsContainer.appendChild(btn);
+            });
+        }
+
+        function submitPrediction(chosenIdx) {
+            const sc = scenarios[currentScenarioKey];
+            const expBox = document.getElementById('explanation-box');
+            const expText = document.getElementById('explanation-text');
+
+            // Highlight selected option
+            const optsContainer = document.getElementById('pred-options');
+            Array.from(optsContainer.children).forEach((btn, idx) => {
+                if (idx === chosenIdx) {
+                    if (idx === sc.correct) {
+                        btn.className = "w-full text-left p-3.5 bg-emerald-950/80 border-2 border-emerald-500 rounded-xl text-xs font-semibold text-emerald-100 shadow-sm flex items-start space-x-2";
+                        btn.innerHTML = `<span class="inline-block mt-0.5 text-emerald-400 font-bold">✅</span> <span>${sc.options[idx]}</span>`;
+                    } else {
+                        btn.className = "w-full text-left p-3.5 bg-rose-950/60 border-2 border-rose-500 rounded-xl text-xs text-rose-100 shadow-sm flex items-start space-x-2";
+                        btn.innerHTML = `<span class="inline-block mt-0.5 text-rose-400 font-bold">❌</span> <span>${sc.options[idx]}</span>`;
+                    }
+                } else {
+                    btn.className = "w-full text-left p-3.5 bg-slate-900/50 border border-slate-800 rounded-xl text-xs text-slate-400 flex items-start space-x-2 opacity-60";
+                }
+            });
+
+            expBox.classList.remove('hidden');
+            expText.innerText = sc.explanation;
+        }
+
+        // ANIMATION CASCADE LOGIC
+        let cascadeTimer = null;
+
+        function startCascade() {
+            resetCascade();
+            const status = document.getElementById('sim-status');
+            status.innerText = "⚠️ Drought hits! Grass starts drying up...";
+
+            cascadeTimer = setTimeout(() => {
+                document.getElementById('anim-grass').innerText = "🍂 🍂 ❌";
+                status.innerText = "❌ Grass disappears! Grasshoppers lose food source...";
+
+                cascadeTimer = setTimeout(() => {
+                    document.getElementById('anim-grasshoppers').innerText = "💀 💀 ❌";
+                    status.innerText = "❌ Grasshoppers starve! Frogs have no prey...";
+
+                    cascadeTimer = setTimeout(() => {
+                        document.getElementById('anim-frogs').innerText = "💀 ❌";
+                        status.innerText = "❌ Frogs collapse! Snakes begin to starve...";
+
+                        cascadeTimer = setTimeout(() => {
+                            document.getElementById('anim-snakes').innerText = "💀";
+                            status.innerText = "❌ Snakes disappear! Eagles face severe food shortage...";
+
+                            cascadeTimer = setTimeout(() => {
+                                document.getElementById('anim-eagles').innerText = "⚠️ 🦅 (Starving)";
+                                status.innerText = "🚨 Ecosystem Collapse Complete! Proves top carnivores depend on plants!";
+                            }, 1200);
+
+                        }, 1200);
+
+                    }, 1200);
+
+                }, 1200);
+
+            }, 1000);
+        }
+
+        function resetCascade() {
+            if (cascadeTimer) clearTimeout(cascadeTimer);
+            document.getElementById('anim-grass').innerText = "🌱 🌱 🌱 🌱 🌱";
+            document.getElementById('anim-grasshoppers').innerText = "🦗 🦗 🦗 🦗";
+            document.getElementById('anim-frogs').innerText = "🐸 🐸 🐸";
+            document.getElementById('anim-snakes').innerText = "🐍 🐍";
+            document.getElementById('anim-eagles').innerText = "🦅";
+            document.getElementById('sim-status').innerText = "Press 'Trigger Drought Cascade' to observe the chain collapse.";
+        }
+
+        // Initialize App
+        window.onload = function() {
+            // Shuffle initial pool slightly for sorting challenge
+            organisms.sort(() => Math.random() - 0.5);
+            renderPool();
+            renderScenario();
+        };
+    </script>
+</body>
+</html>
+```
+
+### What Has Been Updated in the File:
+1. **Simplified 1-Sentence Flip Cards (Tab 1):** Features 🌱 Grass, 🦗 Grasshopper, 🐸 Frog, 🐍 Snake, and 🦅 Eagle with clean, 1-sentence statements on the back.
+2. **Interactive Food Chain Builder (Tab 2):** Cards start shuffled. Learners tap organisms to construct the 5-step food chain and click **"Check My Food Chain"**.
+3. **Inquiry-Oriented "Detective" Feedback:** Gives hints based on where the error occurred (e.g., *"Look carefully at your first two organisms. Which animal eats grass directly?"*) rather than a simple "Incorrect".
+4. **Predict-First "What If?" Scenarios (Tab 3):** Offers multiple-choice predictions for *Severe Drought* and *Insecticide Spray* before unlocking the scientific explanation.
+5. **Emoji Cascade Simulation (Tab 4):** A step-by-step animation showing grass drying up, causing grasshoppers, frogs, snakes, and eagles to collapse in sequence.
